@@ -1,13 +1,21 @@
-import * as Sentry from '@sentry/nestjs';
-import { HttpAdapterHost, NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
+import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as Sentry from '@sentry/nestjs';
 import { nodeProfilingIntegration } from '@sentry/profiling-node';
+import { AppModule } from './app.module';
 import { SentryFilter } from './common/filter/sentry.filter';
+
+declare const module: any; // hot reload | webpack 설정
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  // hot reload | webpack 설정
+  if (module.hot) {
+    module.hot.accept();
+    module.hot.dispose(() => app.close());
+  }
 
   // sentry 설정
   const { httpAdapter } = app.get(HttpAdapterHost);

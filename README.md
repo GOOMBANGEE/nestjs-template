@@ -5,12 +5,16 @@ nestjs template
 
 ## Package List
 
-class-validator class-transformer   
-@nestjs/swagger  
-@prisma/client pg   
--D prisma  
-nest-winston winston -D @types/winston  
-@sentry/nestjs @sentry/profiling-node  
+
+| Feature                  | Installation Command                                                    |  
+|:-------------------------|:------------------------------------------------------------------------|  
+| Validation               | npm i class-validator class-transformer                                 |
+| API Documentation        | npm i @nestjs/swagger                                                   |   
+| Database Integration     | npm i @prisma/client pg<br/> npm install -D prisma                      |
+| Logging                  | npm i nest-winston winston <br/> npm install -D @types/winston          |
+| Error Tracking           | npm i @sentry/nestjs @sentry/profiling-node                             |
+| Hot Reload (Webpack)     | npm install -D webpack-node-externals run-script-webpack-plugin webpack |
+  
 
 ## Project setup
 
