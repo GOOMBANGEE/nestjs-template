@@ -3,6 +3,12 @@
 
 nestjs template
 
+## Package List
+
+class-validator class-transformer   
+
+
+
 ## Project setup
 
 ```bash
