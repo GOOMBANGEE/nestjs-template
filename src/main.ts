@@ -1,9 +1,20 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  // swagger 설정
+  const config = new DocumentBuilder()
+    .setTitle('Swagger')
+    .setDescription('Swagger API description page')
+    .setVersion('1.0')
+    .addTag('api')
+    .build();
+  const documentFactory = () => SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, documentFactory); // localhost:3000/api
 
   // validator 설정
   app.useGlobalPipes(

@@ -6,6 +6,7 @@ nestjs template
 ## Package List
 
 class-validator class-transformer   
+@nestjs/swagger  
 
 
 
