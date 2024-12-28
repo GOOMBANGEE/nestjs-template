@@ -1,10 +1,23 @@
-import { NestFactory } from '@nestjs/core';
+import * as Sentry from '@sentry/nestjs';
+import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { nodeProfilingIntegration } from '@sentry/profiling-node';
+import { SentryFilter } from './common/filter/sentry.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  // sentry 설정
+  const { httpAdapter } = app.get(HttpAdapterHost);
+  app.useGlobalFilters(new SentryFilter(httpAdapter));
+  Sentry.init({
+    dsn: process.env.SENTRY_DSN,
+    integrations: [nodeProfilingIntegration()],
+    tracesSampleRate: 1.0,
+    profilesSampleRate: 1.0,
+  });
 
   // swagger 설정
   const config = new DocumentBuilder()

@@ -5,9 +5,12 @@ import { TestModule } from './test/test.module';
 import { CommonModule } from './common/common.module';
 import { WinstonModule } from 'nest-winston';
 import * as winston from 'winston';
+import { SentryGlobalFilter, SentryModule } from '@sentry/nestjs/setup';
+import { APP_FILTER } from '@nestjs/core';
 
 @Module({
   imports: [
+    SentryModule.forRoot(),
     WinstonModule.forRoot({
       transports: [
         new winston.transports.Console({
@@ -36,6 +39,13 @@ import * as winston from 'winston';
     CommonModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    // sentry 설정
+    {
+      provide: APP_FILTER,
+      useClass: SentryGlobalFilter,
+    },
+  ],
 })
 export class AppModule {}

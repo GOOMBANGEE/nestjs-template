@@ -10,7 +10,7 @@ class-validator class-transformer
 @prisma/client pg   
 -D prisma  
 nest-winston winston -D @types/winston  
-
+@sentry/nestjs @sentry/profiling-node  
 
 ## Project setup
 

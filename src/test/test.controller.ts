@@ -3,6 +3,8 @@ import {
   Controller,
   Delete,
   Get,
+  HttpException,
+  HttpStatus,
   Inject,
   Param,
   Patch,
@@ -19,6 +21,16 @@ export class TestController {
     @Inject('winston') private readonly logger: Logger,
     private readonly testService: TestService,
   ) {}
+
+  @Get('error')
+  throwError() {
+    throw new HttpException('custom error message', HttpStatus.BAD_REQUEST);
+  }
+
+  @Get('unexpected-error')
+  throwUnexpectedError() {
+    throw new Error('unexpected error occurred');
+  }
 
   @Post()
   create(@Body() createTestDto: CreateTestDto) {
