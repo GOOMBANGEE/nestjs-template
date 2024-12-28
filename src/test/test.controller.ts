@@ -1,14 +1,29 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Inject,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { TestService } from './test.service';
 import { CreateTestDto } from './dto/create-test.dto';
 import { UpdateTestDto } from './dto/update-test.dto';
+import { Logger } from 'winston';
 
 @Controller('test')
 export class TestController {
-  constructor(private readonly testService: TestService) {}
+  constructor(
+    @Inject('winston') private readonly logger: Logger,
+    private readonly testService: TestService,
+  ) {}
 
   @Post()
   create(@Body() createTestDto: CreateTestDto) {
+    this.logger.info('method called', { context: 'TestController' });
+    this.logger.debug('debug log');
     return this.testService.create(createTestDto);
   }
 
