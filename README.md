@@ -7,7 +7,8 @@ nestjs template
 
 class-validator class-transformer   
 @nestjs/swagger  
-
+@prisma/client pg   
+-D prisma
 
 
 ## Project setup
