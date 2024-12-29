@@ -6,29 +6,34 @@ nestjs template
 ## Package List
 
 
-| Feature                  | Installation Command                                                    |  
-|:-------------------------|:------------------------------------------------------------------------|  
-| Validation               | npm i class-validator class-transformer                                 |
-| API Documentation        | npm i @nestjs/swagger                                                   |   
-| Database Integration     | npm i @prisma/client pg<br/> npm install -D prisma                      |
-| Logging                  | npm i nest-winston winston <br/> npm install -D @types/winston          |
-| Error Tracking           | npm i @sentry/nestjs @sentry/profiling-node                             |
-| Hot Reload (Webpack)     | npm install -D webpack-node-externals run-script-webpack-plugin webpack |
-  
+| Feature                                                    | Installation Command                                                    |  
+|:-----------------------------------------------------------|:------------------------------------------------------------------------|  
+| Validation                                                 | npm i class-validator class-transformer                                 |
+| API Documentation                                          | npm i @nestjs/swagger                                                   |   
+| Database Integration                                       | npm i @prisma/client pg<br/> npm install -D prisma                      |
+| Logging                                                    | npm i nest-winston winston <br/> npm install -D @types/winston          |
+| Error Tracking                                             | npm i @sentry/nestjs @sentry/profiling-node                             |
+| Hot Reload (Webpack)                                       | npm install -D webpack-node-externals run-script-webpack-plugin webpack |
+| Configuration Management and Validation                    | npm i @nestjs/config joi                                                | 
 
 ## Project setup
 
 ```bash
-$ npm install
+git clone https://github.com/GOOMBANGEE/nestjs-template.git
+
+cd nestjs-template
+cp sample.env.development.local .env.development.local
+
+npm install
 ```
 
 ## Compile and run the project
 
 ```bash
 # development
-$ npm run start
+npm run start
 
 # watch mode
-$ npm run start:dev
+npm run start:dev
 
 ```

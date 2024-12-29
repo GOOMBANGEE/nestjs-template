@@ -14,12 +14,15 @@ import { TestService } from './test.service';
 import { CreateTestDto } from './dto/create-test.dto';
 import { UpdateTestDto } from './dto/update-test.dto';
 import { Logger } from 'winston';
+import { ConfigService } from '@nestjs/config';
+import { envVariableKeys } from '../common/const/env.const';
 
 @Controller('test')
 export class TestController {
   constructor(
     @Inject('winston') private readonly logger: Logger,
     private readonly testService: TestService,
+    private readonly configService: ConfigService,
   ) {}
 
   @Get('error')
@@ -36,6 +39,11 @@ export class TestController {
   create(@Body() createTestDto: CreateTestDto) {
     this.logger.info('method called', { context: 'TestController' });
     this.logger.debug('debug log');
+
+    // env config test
+    this.logger.debug(
+      `test: ${this.configService.get(envVariableKeys.databasePort)}`,
+    );
     return this.testService.create(createTestDto);
   }
 

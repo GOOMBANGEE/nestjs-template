@@ -7,9 +7,27 @@ import { WinstonModule } from 'nest-winston';
 import * as winston from 'winston';
 import { SentryGlobalFilter, SentryModule } from '@sentry/nestjs/setup';
 import { APP_FILTER } from '@nestjs/core';
+import { ConfigModule } from '@nestjs/config';
+import * as Joi from 'joi';
+import * as process from 'node:process';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: `.env.${process.env.NODE_ENV}`,
+      validationSchema: Joi.object({
+        PORT: Joi.number().default(3000).required(),
+        DATABASE_URL: Joi.string().required(),
+        DATABASE_TYPE: Joi.string().valid('postgresql', 'mongodb').required(),
+        DATABASE_USER: Joi.string().required(),
+        DATABASE_PASSWORD: Joi.string().required(),
+        DATABASE_HOST: Joi.string().required(),
+        DATABASE_PORT: Joi.number().required(),
+        DATABASE_DATABASE_NAME: Joi.string().required(),
+        SENTRY_DSN: Joi.string().required(),
+      }),
+    }),
     SentryModule.forRoot(),
     WinstonModule.forRoot({
       transports: [
