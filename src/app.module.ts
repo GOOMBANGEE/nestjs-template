@@ -1,15 +1,17 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { APP_FILTER } from '@nestjs/core';
+import { SentryGlobalFilter, SentryModule } from '@sentry/nestjs/setup';
+import * as Joi from 'joi';
+import { WinstonModule } from 'nest-winston';
+import * as process from 'node:process';
+import * as winston from 'winston';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { TestModule } from './test/test.module';
+import { AuthModule } from './auth/auth.module';
 import { CommonModule } from './common/common.module';
-import { WinstonModule } from 'nest-winston';
-import * as winston from 'winston';
-import { SentryGlobalFilter, SentryModule } from '@sentry/nestjs/setup';
-import { APP_FILTER } from '@nestjs/core';
-import { ConfigModule } from '@nestjs/config';
-import * as Joi from 'joi';
-import * as process from 'node:process';
+import { TestModule } from './test/test.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -26,6 +28,7 @@ import * as process from 'node:process';
         DATABASE_PORT: Joi.number().required(),
         DATABASE_DATABASE_NAME: Joi.string().required(),
         SENTRY_DSN: Joi.string().required(),
+        JWT_SECRET: Joi.string().required(),
       }),
     }),
     SentryModule.forRoot(),
@@ -55,6 +58,8 @@ import * as process from 'node:process';
     }),
     TestModule,
     CommonModule,
+    AuthModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [

@@ -1,21 +1,21 @@
 import {
   Body,
   Controller,
-  Delete,
   Get,
   HttpException,
   HttpStatus,
   Inject,
-  Param,
-  Patch,
   Post,
+  Request,
+  UseGuards,
 } from '@nestjs/common';
-import { TestService } from './test.service';
-import { CreateTestDto } from './dto/create-test.dto';
-import { UpdateTestDto } from './dto/update-test.dto';
-import { Logger } from 'winston';
 import { ConfigService } from '@nestjs/config';
-import { envVariableKeys } from '../common/const/env.const';
+import { JwtGuard } from 'src/auth/guard/jwt.guard';
+import { LocalGuard } from 'src/auth/guard/local.guard';
+import { Logger } from 'winston';
+import { envKey } from '../common/const/env.const';
+import { CreateTestDto } from './dto/create-test.dto';
+import { TestService } from './test.service';
 
 @Controller('test')
 export class TestController {
@@ -39,31 +39,23 @@ export class TestController {
   create(@Body() createTestDto: CreateTestDto) {
     this.logger.info('method called', { context: 'TestController' });
     this.logger.debug('debug log');
-
+    //
     // env config test
-    this.logger.debug(
-      `test: ${this.configService.get(envVariableKeys.databasePort)}`,
-    );
+    this.logger.debug(`test: ${this.configService.get(envKey.databasePort)}`);
     return this.testService.create(createTestDto);
   }
 
-  @Get()
-  findAll() {
-    return this.testService.findAll();
+  @Post('local')
+  @UseGuards(LocalGuard)
+  local() {
+    this.logger.debug('activate local strategy');
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.testService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTestDto: UpdateTestDto) {
-    return this.testService.update(+id, updateTestDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.testService.remove(+id);
+  // @UseGuards(JwtGuard) // auth/strategy/jwt.strategy.ts return payload: {email:string}
+  @Get('jwt')
+  @UseGuards(JwtGuard)
+  jwt(@Request() req) {
+    this.logger.debug(req.user.email);
+    this.logger.debug('activate jwt strategy');
   }
 }
