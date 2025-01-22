@@ -1,10 +1,9 @@
 import { ValidationPipe } from '@nestjs/common';
-import { HttpAdapterHost, NestFactory } from '@nestjs/core';
+import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as Sentry from '@sentry/nestjs';
 import { nodeProfilingIntegration } from '@sentry/profiling-node';
 import { AppModule } from './app.module';
-import { SentryFilter } from './common/filter/sentry.filter';
 
 declare const module: any; // hot reload | webpack 설정
 
@@ -19,7 +18,6 @@ async function bootstrap() {
     credentials: true, // 인증 정보(쿠키 등) 포함 여부
   });
 
-
   // hot reload | webpack 설정
   if (module.hot) {
     module.hot.accept();
@@ -27,8 +25,6 @@ async function bootstrap() {
   }
 
   // sentry 설정
-  const { httpAdapter } = app.get(HttpAdapterHost);
-  app.useGlobalFilters(new SentryFilter(httpAdapter));
   Sentry.init({
     dsn: process.env.SENTRY_DSN,
     integrations: [nodeProfilingIntegration()],
