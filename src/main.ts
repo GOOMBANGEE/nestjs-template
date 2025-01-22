@@ -11,6 +11,15 @@ declare const module: any; // hot reload | webpack 설정
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  // CORS 설정
+  const frontendUrl = process.env.FRONTEND_URL;
+  app.enableCors({
+    origin: frontendUrl, // 프론트엔드의 주소
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // 허용할 HTTP 메서드
+    credentials: true, // 인증 정보(쿠키 등) 포함 여부
+  });
+
+
   // hot reload | webpack 설정
   if (module.hot) {
     module.hot.accept();

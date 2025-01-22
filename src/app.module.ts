@@ -20,9 +20,10 @@ import { UserModule } from './user/user.module';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: `.env.${process.env.NODE_ENV}`,
+      envFilePath: `.env`,
       validationSchema: Joi.object({
         PORT: Joi.number().default(3000).required(),
+
         DATABASE_URL: Joi.string().required(),
         DATABASE_TYPE: Joi.string().valid('postgresql', 'mongodb').required(),
         DATABASE_USER: Joi.string().required(),
@@ -30,8 +31,13 @@ import { UserModule } from './user/user.module';
         DATABASE_HOST: Joi.string().required(),
         DATABASE_PORT: Joi.number().required(),
         DATABASE_DATABASE_NAME: Joi.string().required(),
+
+        FRONTEND_URL: Joi.string().required(),
+
         SENTRY_DSN: Joi.string().required(),
+
         JWT_SECRET: Joi.string().required(),
+
         MAIL_TRANSPORT_HOST: Joi.string().required(),
         MAIL_TRANSPORT_AUTH_USER: Joi.string().required(),
         MAIL_TRANSPORT_AUTH_PASS: Joi.string().required(),
