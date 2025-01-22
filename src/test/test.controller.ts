@@ -10,12 +10,12 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { JwtGuard } from 'src/auth/guard/jwt.guard';
 import { LocalGuard } from 'src/auth/guard/local.guard';
 import { Logger } from 'winston';
-import { envKey } from '../common/const/env.const';
 import { CreateTestDto } from './dto/create-test.dto';
 import { TestService } from './test.service';
+import { RefreshGuard } from '../auth/guard/refresh.guard';
+import { envKey } from '../common/const/env.const';
 
 @Controller('test')
 export class TestController {
@@ -41,7 +41,7 @@ export class TestController {
     this.logger.debug('debug log');
     //
     // env config test
-    this.logger.debug(`test: ${this.configService.get(envKey.databasePort)}`);
+    this.logger.debug(`test: ${this.configService.get(envKey.saltOrRounds)}`);
     return this.testService.create(createTestDto);
   }
 
@@ -51,9 +51,9 @@ export class TestController {
     this.logger.debug('activate local strategy');
   }
 
-  // @UseGuards(JwtGuard) // auth/strategy/jwt.strategy.ts return payload: {email:string}
+  // @UseGuards(RefreshGuard) // auth/strategy/refresh.strategy.ts return payload: {username:string}
   @Get('jwt')
-  @UseGuards(JwtGuard)
+  @UseGuards(RefreshGuard)
   jwt(@Request() req) {
     this.logger.debug(req.user.email);
     this.logger.debug('activate jwt strategy');

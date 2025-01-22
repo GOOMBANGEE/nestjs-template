@@ -22,20 +22,16 @@ import { GlobalExceptionFilter } from './common/filter/global-exception.filter';
       envFilePath: `.env`,
       validationSchema: Joi.object({
         PORT: Joi.number().default(3000).required(),
-
-        DATABASE_URL: Joi.string().required(),
-        DATABASE_TYPE: Joi.string().valid('postgresql', 'mongodb').required(),
-        DATABASE_USER: Joi.string().required(),
-        DATABASE_PASSWORD: Joi.string().required(),
-        DATABASE_HOST: Joi.string().required(),
-        DATABASE_PORT: Joi.number().required(),
-        DATABASE_DATABASE_NAME: Joi.string().required(),
-
+        DB_URL: Joi.string().required(),
         FRONTEND_URL: Joi.string().required(),
-
         SENTRY_DSN: Joi.string().required(),
 
-        JWT_SECRET: Joi.string().required(),
+        JWT_ACCESS_TOKEN: Joi.string().required(),
+        JWT_ACCESS_TOKEN_EXPIRES: Joi.number().required(),
+        JWT_ACCESS_TOKEN_SECRET: Joi.string().required(),
+        JWT_REFRESH_TOKEN: Joi.string().required(),
+        JWT_REFRESH_TOKEN_EXPIRES: Joi.number().required(),
+        JWT_REFRESH_TOKEN_SECRET: Joi.string().required(),
 
         MAIL_TRANSPORT_HOST: Joi.string().required(),
         MAIL_TRANSPORT_AUTH_USER: Joi.string().required(),
