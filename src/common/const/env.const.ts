@@ -1,8 +1,14 @@
+const baseUrl = 'BASE_URL';
+const frontUrl = 'FRONT_URL';
+const activationCodeLength = 'ACTIVATION_CODE_LENGTH';
 const saltOrRounds = 'SALT_OR_ROUNDS';
-const accessToken = 'JWT_ACCESS_TOKEN';
+
+const imagePath = 'IMAGE_PATH';
+
+const accessTokenKey = 'JWT_ACCESS_TOKEN_KEY';
 const accessTokenExpires = 'JWT_ACCESS_TOKEN_EXPIRES';
 const accessTokenSecret = 'JWT_ACCESS_TOKEN_SECRET';
-const refreshToken = 'JWT_REFRESH_TOKEN';
+const refreshTokenKey = 'JWT_REFRESH_TOKEN_KEY';
 const refreshTokenExpires = 'JWT_REFRESH_TOKEN_EXPIRES';
 const refreshTokenSecret = 'JWT_REFRESH_TOKEN_SECRET';
 
@@ -13,11 +19,17 @@ const mailDefaultsFrom = 'MAIL_DEFAULTS_FROM';
 const mailTemplateDir = 'MAIL_TEMPLATE_DIR';
 
 export const envKey = {
+  baseUrl,
+  frontUrl,
+  activationCodeLength,
   saltOrRounds,
-  accessToken,
+
+  imagePath,
+
+  accessTokenKey,
   accessTokenExpires,
   accessTokenSecret,
-  refreshToken,
+  refreshTokenKey,
   refreshTokenExpires,
   refreshTokenSecret,
 

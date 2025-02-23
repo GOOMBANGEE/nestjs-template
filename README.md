@@ -22,7 +22,7 @@ nestjs template
 git clone https://github.com/GOOMBANGEE/nestjs-template.git
 
 cd nestjs-template
-cp sample.env.development.local .env.development.local
+cp sample.env .env
 
 npm install
 ```

@@ -23,13 +23,19 @@ import { GlobalExceptionFilter } from './common/filter/global-exception.filter';
       validationSchema: Joi.object({
         PORT: Joi.number().default(3000).required(),
         DB_URL: Joi.string().required(),
+        BASE_URL: Joi.string().required(),
         FRONTEND_URL: Joi.string().required(),
         SENTRY_DSN: Joi.string().required(),
 
-        JWT_ACCESS_TOKEN: Joi.string().required(),
+        IMAGE_PATH: Joi.string().required(),
+
+        ACTIVATION_CODE_LENGTH: Joi.number().required(),
+        SALT_OR_ROUNDS: Joi.number().required(),
+
+        JWT_ACCESS_TOKEN_KEY: Joi.string().required(),
         JWT_ACCESS_TOKEN_EXPIRES: Joi.number().required(),
         JWT_ACCESS_TOKEN_SECRET: Joi.string().required(),
-        JWT_REFRESH_TOKEN: Joi.string().required(),
+        JWT_REFRESH_TOKEN_KEY: Joi.string().required(),
         JWT_REFRESH_TOKEN_EXPIRES: Joi.number().required(),
         JWT_REFRESH_TOKEN_SECRET: Joi.string().required(),
 

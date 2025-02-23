@@ -3,14 +3,40 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DB_URL")
+  provider     = "postgresql"
+  url          = env("DB_URL")
+  relationMode = "prisma"
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  username  String   @unique
-  password  String
-  createdAt DateTime @default(now())
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  username     String   @unique
+  password     String
+  registerDate DateTime @default(now()) @map("register_date")
+  activated    Boolean  @default(false)
+  token        String?
+  role         String?
+
+  UserTemp      UserTemp[]
+  userTempReset userTempReset[]
+}
+
+model UserTemp {
+  id             Int    @id @default(autoincrement())
+  userId         Int    @unique @map("user_id")
+  user           User   @relation(fields: [userId], references: [id])
+  token          String @unique
+  activationCode Int    @map("activation_code")
+
+  @@index([userId])
+}
+
+model userTempReset {
+  id     Int    @id @default(autoincrement())
+  userId Int    @unique @map("user_id")
+  user   User   @relation(fields: [userId], references: [id])
+  token  String @unique
+
+  @@index([userId])
 }
