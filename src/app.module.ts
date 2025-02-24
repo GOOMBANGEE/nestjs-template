@@ -14,6 +14,7 @@ import { envKey } from './common/const/env.const';
 import { TestModule } from './test/test.module';
 import { UserModule } from './user/user.module';
 import { GlobalExceptionFilter } from './common/filter/global-exception.filter';
+import { AppService } from './app.service';
 
 @Module({
   imports: [
@@ -102,6 +103,7 @@ import { GlobalExceptionFilter } from './common/filter/global-exception.filter';
   ],
   controllers: [],
   providers: [
+    AppService,
     {
       provide: APP_FILTER,
       useClass: GlobalExceptionFilter,
