@@ -317,7 +317,7 @@ export class AuthService {
         return await this.prisma.user.findUnique({
           where: { id: requestUser.id },
         });
-      } catch (e) {
+      } catch {
         throw new UserException(USER_ERROR.UNREGISTERED);
       }
     }
