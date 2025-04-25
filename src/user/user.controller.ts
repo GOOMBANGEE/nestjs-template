@@ -8,6 +8,7 @@ import {
   Query,
   Res,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { JwtUserInfo, RequestUser } from '../auth/decorator/user.decorator';
@@ -18,7 +19,9 @@ import { USER_ERROR, UserException } from '../common/exception/user.exception';
 import { RecoverDto } from './dto/recover.dto';
 import { RecoverPasswordDto } from './dto/recover-password.dto';
 import { Throttle } from '@nestjs/throttler';
+import { BigIntInterceptor } from '../common/interceptor/big-int.interceptor';
 
+@UseInterceptors(BigIntInterceptor)
 @Controller('api/user')
 @UseGuards(AccessGuard)
 @Throttle({ default: { limit: 2, ttl: 1000 } })

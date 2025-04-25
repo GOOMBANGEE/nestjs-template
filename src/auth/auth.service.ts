@@ -311,15 +311,17 @@ export class AuthService {
     ]);
   }
 
-  async validateRequestUser(requestUser: JwtUserInfo) {
-    if (requestUser) {
+  async validateRequestUser(jwtUserInfo: JwtUserInfo) {
+    if (jwtUserInfo) {
       try {
         return await this.prisma.user.findUnique({
-          where: { id: requestUser.id },
+          where: { id: jwtUserInfo.id },
         });
       } catch {
         throw new UserException(USER_ERROR.UNREGISTERED);
       }
     }
+
+    throw new UserException(USER_ERROR.UNREGISTERED);
   }
 }
