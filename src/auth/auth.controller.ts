@@ -12,7 +12,11 @@ import {
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { RefreshGuard } from './guard/refresh.guard';
-import { RequestUser, RequestUserLocal } from './decorator/user.decorator';
+import {
+  JwtUserInfo,
+  LocalUserInfo,
+  RequestUser,
+} from './decorator/user.decorator';
 import { Response } from 'express';
 import { AccessGuard } from './guard/access.guard';
 import { AuthGuard } from '@nestjs/passport';
@@ -56,7 +60,7 @@ export class AuthController {
   @UseGuards(LocalGuard) // auth/guard/local.guard.ts => LocalGuard extends AuthGuard('local')
   @HttpCode(HttpStatus.OK)
   login(
-    @RequestUser() requestUser: RequestUserLocal,
+    @RequestUser() requestUser: LocalUserInfo,
     @Res({ passthrough: true }) response: Response,
   ) {
     return this.authService.login(requestUser, response);
@@ -69,7 +73,7 @@ export class AuthController {
   @Throttle({ default: { limit: 2, ttl: 10000 } })
   @HttpCode(HttpStatus.OK)
   async refresh(
-    @RequestUser() requestUser: RequestUser,
+    @RequestUser() requestUser: JwtUserInfo,
     @Res({ passthrough: true }) response: Response,
   ) {
     return this.authService.refreshToken(requestUser, response);

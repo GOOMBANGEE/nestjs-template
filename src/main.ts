@@ -1,6 +1,5 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as Sentry from '@sentry/nestjs';
 import { nodeProfilingIntegration } from '@sentry/profiling-node';
 import { AppModule } from './app.module';
@@ -39,16 +38,6 @@ async function bootstrap() {
     tracesSampleRate: 1.0,
     profilesSampleRate: 1.0,
   });
-
-  // swagger 설정
-  const config = new DocumentBuilder()
-    .setTitle('Swagger')
-    .setDescription('Swagger API description page')
-    .setVersion('1.0')
-    .addTag('api')
-    .build();
-  const documentFactory = () => SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, documentFactory); // localhost:3000/api
 
   // validator 설정
   app.useGlobalPipes(

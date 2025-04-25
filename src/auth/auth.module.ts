@@ -7,10 +7,10 @@ import { AuthService } from './auth.service';
 import { LocalStrategy } from './strategy/local.strategy';
 import { AccessStrategy } from './strategy/access.strategy';
 import { RefreshStrategy } from './strategy/refresh.strategy';
-import { MailModule } from '../mail/mail.module';
+import { CacheTokenUtil } from './util/cache-token.util';
 
 @Module({
-  imports: [CommonModule, PassportModule, JwtModule, MailModule],
+  imports: [CommonModule, PassportModule, JwtModule],
   controllers: [AuthController],
   providers: [
     AuthService,
@@ -18,6 +18,7 @@ import { MailModule } from '../mail/mail.module';
     JwtService,
     AccessStrategy,
     RefreshStrategy,
+    CacheTokenUtil,
   ],
   exports: [AuthService, LocalStrategy, AccessStrategy, RefreshStrategy],
 })

@@ -4,16 +4,17 @@ nestjs template
 
 ## Package List
 
-| Feature                                 | Package                                                                                                                                |
-|:----------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------|
-| Authentication                          | @nestjs/passport @nestjs/jwt passport passport-jwt passport-local bcrypt <br/> @types/passport-local @types/passport-jwt @types/bcrypt |
-| Configuration Management and Validation | @nestjs/config joi                                                                                                                     |
-| Database Integration                    | @prisma/client pg <br/> prisma                                                                                                         |
-| Email                                   | @nestjs-modules/mailer nodemailer                                                                                                      |
-| Error Tracking                          | @sentry/nestjs @sentry/profiling-node                                                                                                  |
-| Logging                                 | nest-winston winston <br/> @types/winston                                                                                              |
-| Rate Limiting                           | @nestjs/throttler                                                                                                                      |
-| Validation                              | class-validator class-transformer                                                                                                      |
+| Feature                                 | Package                                                                                                                                  |
+|:----------------------------------------|:-----------------------------------------------------------------------------------------------------------------------------------------|
+| Authentication                          | @nestjs/passport @nestjs/jwt passport passport-jwt passport-local bcrypt <br/> @types/passport-local @types/passport-jwt @types/bcrypt   |
+| Caching                                 | @nestjs/cache-manager cache-manager @keyv/redis                                                                                          |
+| Configuration Management and Validation | @nestjs/config joi                                                                                                                       |
+| Database Integration                    | @prisma/client pg <br/> prisma                                                                                                           |
+| Email                                   | @nestjs-modules/mailer nodemailer                                                                                                        |
+| Error Tracking                          | @sentry/nestjs @sentry/profiling-node                                                                                                    |
+| Logging                                 | nest-winston winston <br/> @types/winston                                                                                                |
+| Rate Limiting                           | @nestjs/throttler                                                                                                                        |
+| Validation                              | class-validator class-transformer                                                                                                        |
 
 ## Project setup
 

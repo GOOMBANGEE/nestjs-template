@@ -11,7 +11,7 @@ import { RecoverDto } from './dto/recover.dto';
 import { MailService } from '../mail/mail.service';
 import { v1 as uuidV1 } from 'uuid';
 import { RecoverPasswordDto } from './dto/recover-password.dto';
-import { RequestUser } from '../auth/decorator/user.decorator';
+import { JwtUserInfo } from '../auth/decorator/user.decorator';
 
 @Injectable()
 export class UserService {
@@ -30,7 +30,7 @@ export class UserService {
 
   // /user
   async update(
-    requestUser: RequestUser,
+    requestUser: JwtUserInfo,
     updateUserDto: UpdateUserDto,
     response: Response,
   ) {
@@ -76,7 +76,7 @@ export class UserService {
   }
 
   // /user
-  async delete(requestUser: RequestUser, response: Response) {
+  async delete(requestUser: JwtUserInfo, response: Response) {
     const user = await this.authService.validateRequestUser(requestUser);
     response.clearCookie(this.refreshTokenKey);
     await this.prisma.user.delete({ where: { id: user.id } });

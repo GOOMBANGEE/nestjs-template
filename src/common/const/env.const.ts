@@ -1,3 +1,9 @@
+const redisHost = 'REDIS_HOST';
+const redisPort = 'REDIS_PORT';
+const redisPassword = 'REDIS_PASSWORD';
+const redisUrl = 'REDIS_URL';
+const redisNamespace = 'REDIS_NAMESPACE';
+
 const baseUrl = 'BASE_URL';
 const frontUrl = 'FRONT_URL';
 const activationCodeLength = 'ACTIVATION_CODE_LENGTH';
@@ -19,6 +25,12 @@ const mailDefaultsFrom = 'MAIL_DEFAULTS_FROM';
 const mailTemplateDir = 'MAIL_TEMPLATE_DIR';
 
 export const envKey = {
+  redisHost,
+  redisPort,
+  redisPassword,
+  redisUrl,
+  redisNamespace,
+
   baseUrl,
   frontUrl,
   activationCodeLength,

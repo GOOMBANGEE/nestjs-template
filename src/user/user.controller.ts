@@ -10,7 +10,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { RequestUser } from '../auth/decorator/user.decorator';
+import { JwtUserInfo, RequestUser } from '../auth/decorator/user.decorator';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Response } from 'express';
 import { AccessGuard } from '../auth/guard/access.guard';
@@ -28,7 +28,7 @@ export class UserController {
   // /user
   @Patch()
   async update(
-    @RequestUser() requestUser: RequestUser,
+    @RequestUser() requestUser: JwtUserInfo,
     @Body() updateUserDto: UpdateUserDto,
     @Res({ passthrough: true }) response: Response,
   ) {
@@ -42,7 +42,7 @@ export class UserController {
   // return: clear-cookie('refreshToken')
   @Delete()
   async delete(
-    @RequestUser() requestUser: RequestUser,
+    @RequestUser() requestUser: JwtUserInfo,
     @Res({ passthrough: true }) response: Response,
   ) {
     if (!requestUser || requestUser.role?.includes('admin')) {

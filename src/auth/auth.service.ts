@@ -13,8 +13,8 @@ import { v1 as uuidV1 } from 'uuid';
 import { MailService } from '../mail/mail.service';
 import { EmailActivateDto } from './dto/email-activate.dto';
 import {
-  RequestUser,
-  RequestUserLocal,
+  JwtUserInfo,
+  LocalUserInfo,
   UserBase,
 } from './decorator/user.decorator';
 import {
@@ -228,7 +228,7 @@ export class AuthService {
   }
 
   // /auth/login
-  async login(requestUserLocal: RequestUserLocal, response: Response) {
+  async login(requestUserLocal: LocalUserInfo, response: Response) {
     const { accessToken, accessTokenExpires } =
       await this.generateAccessToken(requestUserLocal);
     await this.generateRefreshToken(requestUserLocal, response);
@@ -278,7 +278,7 @@ export class AuthService {
   }
 
   // /auth/refresh
-  async refreshToken(requestUser: RequestUser, response: Response) {
+  async refreshToken(requestUser: JwtUserInfo, response: Response) {
     if (
       requestUser.type !== this.refreshTokenKey ||
       Date.now() >= requestUser.exp * 1000
@@ -311,7 +311,7 @@ export class AuthService {
     ]);
   }
 
-  async validateRequestUser(requestUser: RequestUser) {
+  async validateRequestUser(requestUser: JwtUserInfo) {
     if (requestUser) {
       try {
         return await this.prisma.user.findUnique({

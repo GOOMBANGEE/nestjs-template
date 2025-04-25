@@ -16,14 +16,43 @@ import { UserModule } from './user/user.module';
 import { GlobalExceptionFilter } from './common/filter/global-exception.filter';
 import { AppService } from './app.service';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { CacheModule } from '@nestjs/cache-manager';
+import { createKeyv } from '@keyv/redis';
 
 @Module({
   imports: [
+    CacheModule.registerAsync({
+      isGlobal: true,
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => {
+        const redisUrl = configService.get(envKey.redisUrl);
+        const redisNamespace = configService.get(envKey.redisNamespace);
+
+        const keyv = createKeyv(redisUrl, {
+          namespace: redisNamespace,
+          keyPrefixSeparator: ':',
+        });
+
+        // connection test
+        // await keyv.set('connectionTest', 'success');
+        // console.log(await keyv.get('connectionTest'));
+        // console.log(keyv);
+
+        return { stores: [keyv] };
+      },
+    }),
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: `.env`,
       validationSchema: Joi.object({
         PORT: Joi.number().default(3000).required(),
+
+        REDIS_HOST: Joi.string().required(),
+        REDIS_PORT: Joi.number().required(),
+        // REDIS_PASSWORD: Joi.string().required(),
+        REDIS_URL: Joi.string().required(),
+        REDIS_NAMESPACE: Joi.string(),
+
         DATABASE_URL: Joi.string().required(),
         BASE_URL: Joi.string().required(),
         FRONTEND_URL: Joi.string().required(),

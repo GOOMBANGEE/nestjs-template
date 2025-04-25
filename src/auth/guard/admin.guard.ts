@@ -4,7 +4,7 @@ import {
   UserException,
 } from '../../common/exception/user.exception';
 import { PrismaService } from '../../common/prisma.service';
-import { RequestUser } from '../decorator/user.decorator';
+import { JwtUserInfo } from '../decorator/user.decorator';
 
 @Injectable()
 export class AdminGuard implements CanActivate {
@@ -12,7 +12,7 @@ export class AdminGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext) {
     const request = context.switchToHttp().getRequest();
-    const requestUser: RequestUser = request.user;
+    const requestUser: JwtUserInfo = request.user;
 
     const user = await this.prisma.user.findUnique({
       where: { id: requestUser.id },
