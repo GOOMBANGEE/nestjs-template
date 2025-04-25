@@ -4,17 +4,16 @@ nestjs template
 
 ## Package List
 
-| Feature                                 | Installation Command                                                                                                                                       |
-| :-------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Validation                              | npm i class-validator class-transformer                                                                                                                    |
-| API Documentation                       | npm i @nestjs/swagger                                                                                                                                      |
-| Database Integration                    | npm i @prisma/client pg<br/> npm install -D prisma                                                                                                         |
-| Logging                                 | npm i nest-winston winston <br/> npm install -D @types/winston                                                                                             |
-| Error Tracking                          | npm i @sentry/nestjs @sentry/profiling-node                                                                                                                |
-| Hot Reload (Webpack)                    | npm install -D webpack-node-externals run-script-webpack-plugin webpack                                                                                    |
-| Configuration Management and Validation | npm i @nestjs/config joi                                                                                                                                   |
-| Authentication                          | npm i @nestjs/passport @nestjs/jwt passport passport-jwt passport-local bcrypt<br/> npm install -D @types/passport-local @types/passport-jwt @types/bcrypt |
-| Email                                   | npm i @nestjs-modules/mailer nodemailer                                                                                                                    |
+| Feature                                 | Package                                                                                                                                |
+|:----------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------|
+| Authentication                          | @nestjs/passport @nestjs/jwt passport passport-jwt passport-local bcrypt <br/> @types/passport-local @types/passport-jwt @types/bcrypt |
+| Configuration Management and Validation | @nestjs/config joi                                                                                                                     |
+| Database Integration                    | @prisma/client pg <br/> prisma                                                                                                         |
+| Email                                   | @nestjs-modules/mailer nodemailer                                                                                                      |
+| Error Tracking                          | @sentry/nestjs @sentry/profiling-node                                                                                                  |
+| Logging                                 | nest-winston winston <br/> @types/winston                                                                                              |
+| Rate Limiting                           | @nestjs/throttler                                                                                                                      |
+| Validation                              | class-validator class-transformer                                                                                                      |
 
 ## Project setup
 

@@ -16,8 +16,10 @@ import { CreateTestDto } from './dto/create-test.dto';
 import { TestService } from './test.service';
 import { RefreshGuard } from '../auth/guard/refresh.guard';
 import { envKey } from '../common/const/env.const';
+import { Throttle } from '@nestjs/throttler';
 
 @Controller('test')
+@Throttle({ default: { limit: 2, ttl: 1000 } })
 export class TestController {
   constructor(
     @Inject('winston') private readonly logger: Logger,

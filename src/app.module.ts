@@ -2,7 +2,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { APP_FILTER } from '@nestjs/core';
+import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { SentryModule } from '@sentry/nestjs/setup';
 import * as Joi from 'joi';
 import { WinstonModule } from 'nest-winston';
@@ -15,6 +15,7 @@ import { TestModule } from './test/test.module';
 import { UserModule } from './user/user.module';
 import { GlobalExceptionFilter } from './common/filter/global-exception.filter';
 import { AppService } from './app.service';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
   imports: [
@@ -23,7 +24,7 @@ import { AppService } from './app.service';
       envFilePath: `.env`,
       validationSchema: Joi.object({
         PORT: Joi.number().default(3000).required(),
-        DB_URL: Joi.string().required(),
+        DATABASE_URL: Joi.string().required(),
         BASE_URL: Joi.string().required(),
         FRONTEND_URL: Joi.string().required(),
         SENTRY_DSN: Joi.string().required(),
@@ -96,6 +97,14 @@ import { AppService } from './app.service';
         }),
       ],
     }),
+    ThrottlerModule.forRoot({
+      throttlers: [
+        {
+          ttl: 0,
+          limit: Number.MAX_SAFE_INTEGER,
+        },
+      ],
+    }),
     TestModule,
     CommonModule,
     AuthModule,
@@ -107,6 +116,10 @@ import { AppService } from './app.service';
     {
       provide: APP_FILTER,
       useClass: GlobalExceptionFilter,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
     },
   ],
 })

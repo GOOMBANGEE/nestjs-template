@@ -17,9 +17,11 @@ import { AccessGuard } from '../auth/guard/access.guard';
 import { USER_ERROR, UserException } from '../common/exception/user.exception';
 import { RecoverDto } from './dto/recover.dto';
 import { RecoverPasswordDto } from './dto/recover-password.dto';
+import { Throttle } from '@nestjs/throttler';
 
 @Controller('api/user')
 @UseGuards(AccessGuard)
+@Throttle({ default: { limit: 2, ttl: 1000 } })
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
